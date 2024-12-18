@@ -41,10 +41,11 @@ public class RestaurantController {
         return menuServices.findByRestaurant(restaurantId);
     }
 
-    @GetMapping("/viewOrders/{restaurant_id}")
-    public List<Order> viewOrder(Long restaurant_id)
+    @GetMapping("/viewOrders/{restaurantId}")
+    public List<Order> viewOrder(@PathVariable Long restaurantId)
     {
-        return restaurantServices.viewOrders(restaurant_id);
+
+        return restaurantServices.viewOrders(restaurantId);
     }
 
 

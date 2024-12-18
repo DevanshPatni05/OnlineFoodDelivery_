@@ -82,8 +82,7 @@
             );
             if (authentication.isAuthenticated()) {
                 UserPrincipal userPrincipal = new UserPrincipal(customer);
-                String token = service.generateToken(userPrincipal);
-                return token; // Return generated token
+                return service.generateToken(userPrincipal);
             } else {
                 return "Invalid credentials";
             }
@@ -122,11 +121,12 @@
             return null;
         }
 
-        public Order placeOrder(Order order)
+        public Order placeOrder(Order order,Long id)
         {
             Optional<Customer> customer=repo.findById(order.getCustomer().getCustomerId());
             if(customer.isPresent()) {
-                Optional<Restaurant> restaurant = restaurantRepo.findById((order.getRestaurant().getRestaurantId()));
+
+                Optional<Restaurant> restaurant = restaurantRepo.findById(id);
                 if (restaurant.isPresent()) {
                     order.setCustomer(customer.get());
                     order.setRestaurant(restaurant.get());

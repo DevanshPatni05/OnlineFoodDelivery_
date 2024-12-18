@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @Service
 @Qualifier("restaurantServices")
-public class RestaurantServices implements UserDetailsService {
+public class RestaurantServices {
 
     @Autowired
     RestaurantRepo restaurantRepo;
@@ -26,10 +26,6 @@ public class RestaurantServices implements UserDetailsService {
     OrderRepo orderRepo;
 
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
-    }
 
 
     public List<Order> viewOrders(Long restaurantId)

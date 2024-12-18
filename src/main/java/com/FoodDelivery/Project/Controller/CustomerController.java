@@ -90,10 +90,10 @@ public class CustomerController {
         return menuServices.allMenuItems();
     }
 
-    @PostMapping("/placeOrder")
-    public Order placeOrder(@RequestBody Order order)
+    @PostMapping("/placeOrder/{id}")
+    public Order placeOrder(@RequestBody Order order,Long id)
     {
-        return customerServices.placeOrder(order);
+        return customerServices.placeOrder(order,id);
     }
 
 

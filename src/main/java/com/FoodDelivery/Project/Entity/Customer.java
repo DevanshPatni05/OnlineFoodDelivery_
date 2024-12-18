@@ -1,11 +1,10 @@
 package com.FoodDelivery.Project.Entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jdk.dynalink.linker.LinkerServices;
 import lombok.*;
 
-import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +26,7 @@ public class Customer {
     private String role;
 
     @OneToMany(mappedBy = "customer")
+            @JsonIgnore
     List<Order> orders=new ArrayList<>();
 
 
