@@ -2,10 +2,9 @@ package com.FoodDelivery.Project.Controller;
 
 
 import com.FoodDelivery.Project.Entity.Admin;
-import com.FoodDelivery.Project.Entity.Customer;
 import com.FoodDelivery.Project.Entity.Restaurant;
 import com.FoodDelivery.Project.Services.AdminServices;
-import com.FoodDelivery.Project.Services.CustomerServices;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/Admin")
+@Tag(name="Admin's API's")
 public class AdminController {
 
     @Autowired

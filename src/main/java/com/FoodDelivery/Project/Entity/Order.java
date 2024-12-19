@@ -27,9 +27,11 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="restaurant_id")
+
     @JsonIgnore
     private Restaurant restaurant;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
     List<OrderItem> orderItems=new ArrayList<>();
 

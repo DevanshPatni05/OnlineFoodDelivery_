@@ -8,6 +8,7 @@ import com.FoodDelivery.Project.Repository.RestaurantRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,7 +21,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@Qualifier("adminServices")
 public class AdminServices implements UserDetailsService {
 
     @Autowired
@@ -46,13 +46,12 @@ public class AdminServices implements UserDetailsService {
         admin.setPassword(encoder.encode(admin.getPassword()));
        return adminRepo.save(admin);
     }
-    public String verify(Admin admin) throws Exception {
 
-
+    public String verify(Admin admin) {
         System.out.println(admin.getName()+admin.getPassword());
-        String role=admin.getRole();
         Authentication authentication=authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(admin.getName(), admin.getPassword()));
+                new UsernamePasswordAuthenticationToken(admin.getName(), admin.getPassword())
+            );
 
         if (authentication.isAuthenticated()) {
             System.out.println("Inside if");
@@ -77,14 +76,10 @@ public class AdminServices implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        Admin admin=adminRepo.findByName(name);
-        if(admin!=null)
-        {
-            return  UserPrincipal.create(admin);
-        }
-        throw new UsernameNotFoundException("Admin not found");
-    }
+        Admin admin = adminRepo.findByName(name);
+        return UserPrincipal.create(admin);
 
+    }
     public Restaurant insertRestaurant(Restaurant restaurant)
     {
         return restaurantRepo.save(restaurant);

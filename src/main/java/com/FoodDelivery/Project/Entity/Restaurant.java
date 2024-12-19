@@ -26,7 +26,7 @@ public class Restaurant {
     List<Menuu> menu=new ArrayList<>();
 
     @OneToMany(mappedBy = "restaurant")
-            @JsonIgnore
+    @JsonIgnore
     List<Order>orders=new ArrayList<>();
 
 }

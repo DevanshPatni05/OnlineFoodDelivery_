@@ -3,7 +3,6 @@
 
     import com.FoodDelivery.Project.Entity.*;
     import com.FoodDelivery.Project.Repository.*;
-    import io.jsonwebtoken.security.Jwks;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.context.annotation.Lazy;
     import org.springframework.context.annotation.Primary;
@@ -28,6 +27,7 @@
         @Autowired
         @Lazy
         AuthenticationManager authManager;
+
         @Autowired
         private CustomerRepo repo;
 
@@ -134,6 +134,7 @@
                     List<OrderItem> orderItem = new ArrayList<>();
 
                     for (OrderItem orderItems : order.getOrderItems()) {
+                        orderItemRepo.save(orderItems);
                         Optional<Menuu> menuItems = menuRepo.findById(orderItems.getMenu().getId());
                         if (menuItems.isPresent()) {
 

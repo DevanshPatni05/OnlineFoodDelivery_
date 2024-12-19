@@ -15,10 +15,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
 @EnableWebSecurity
 @Configuration
+
 public class SpringSecurityConfiguration {
 
     @Autowired
@@ -33,7 +35,7 @@ public class SpringSecurityConfiguration {
         return http
                 .csrf(customizer -> customizer.disable())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/Admin/**","/Customer/login","/Customer/insert","/Restaurant/enterItems/**","/Customer/placeOrder","/Restaurant/viewOrders/**")
+                        .requestMatchers("/Admin/**","/Customer/login","/Customer/insert","/Restaurant/enterItems/**","/Customer/placeOrder","/Restaurant/viewOrders/**","/swagger-ui/index.html")
                         .permitAll()
                         .requestMatchers("/Customers/**").hasRole("Customer")
 //                        .requestMatchers("/Admin/**").hasRole("Admin")
