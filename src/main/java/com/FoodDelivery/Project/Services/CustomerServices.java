@@ -3,7 +3,6 @@
 
     import com.FoodDelivery.Project.Entity.*;
     import com.FoodDelivery.Project.Repository.*;
-    import io.jsonwebtoken.security.Jwks;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.context.annotation.Lazy;
     import org.springframework.context.annotation.Primary;
@@ -28,6 +27,7 @@
         @Autowired
         @Lazy
         AuthenticationManager authManager;
+
         @Autowired
         private CustomerRepo repo;
 
@@ -82,8 +82,7 @@
             );
             if (authentication.isAuthenticated()) {
                 UserPrincipal userPrincipal = new UserPrincipal(customer);
-                String token = service.generateToken(userPrincipal);
-                return token; // Return generated token
+                return service.generateToken(userPrincipal);
             } else {
                 return "Invalid credentials";
             }
@@ -122,11 +121,12 @@
             return null;
         }
 
-        public Order placeOrder(Order order)
+        public Order placeOrder(Order order,Long id)
         {
             Optional<Customer> customer=repo.findById(order.getCustomer().getCustomerId());
             if(customer.isPresent()) {
-                Optional<Restaurant> restaurant = restaurantRepo.findById((order.getRestaurant().getRestaurantId()));
+
+                Optional<Restaurant> restaurant = restaurantRepo.findById(id);
                 if (restaurant.isPresent()) {
                     order.setCustomer(customer.get());
                     order.setRestaurant(restaurant.get());
@@ -134,6 +134,7 @@
                     List<OrderItem> orderItem = new ArrayList<>();
 
                     for (OrderItem orderItems : order.getOrderItems()) {
+                        orderItemRepo.save(orderItems);
                         Optional<Menuu> menuItems = menuRepo.findById(orderItems.getMenu().getId());
                         if (menuItems.isPresent()) {
 

@@ -1,5 +1,6 @@
 package com.FoodDelivery.Project.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +26,7 @@ public class Restaurant {
     List<Menuu> menu=new ArrayList<>();
 
     @OneToMany(mappedBy = "restaurant")
+    @JsonIgnore
     List<Order>orders=new ArrayList<>();
 
 }

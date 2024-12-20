@@ -1,5 +1,6 @@
 package com.FoodDelivery.Project.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,11 +25,14 @@ public class Order {
             @JoinColumn(name="customer_id")
     Customer customer;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="restaurant_id")
-    Restaurant restaurant;
 
-    @OneToMany(mappedBy = "order")
+    @JsonIgnore
+    private Restaurant restaurant;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
     List<OrderItem> orderItems=new ArrayList<>();
 
 

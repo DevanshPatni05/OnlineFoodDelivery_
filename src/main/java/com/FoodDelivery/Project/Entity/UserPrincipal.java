@@ -55,7 +55,7 @@ public class UserPrincipal implements UserDetails {
         if (admin == null && role != null) {
             return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + customer.getRole()));
         } else if (customer == null && role != null) {
-            return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + admin.getRole()));
+            return Collections.singleton(new SimpleGrantedAuthority("ROLE_" +    admin.getRole()));
         } else {
             return Collections.emptyList();
         }

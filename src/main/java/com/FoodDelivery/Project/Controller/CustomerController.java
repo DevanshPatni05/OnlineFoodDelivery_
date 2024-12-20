@@ -6,6 +6,7 @@ import com.FoodDelivery.Project.Entity.Menuu;
 import com.FoodDelivery.Project.Entity.Order;
 import com.FoodDelivery.Project.Services.CustomerServices;
 import com.FoodDelivery.Project.Services.MenuServices;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/Customer")
+@Tag(name="Customer's API's")
 public class CustomerController {
 
     @Autowired
@@ -90,10 +92,10 @@ public class CustomerController {
         return menuServices.allMenuItems();
     }
 
-    @PostMapping("/placeOrder")
-    public Order placeOrder(@RequestBody Order order)
+    @PostMapping("/placeOrder/{id}")
+    public Order placeOrder(@RequestBody Order order,@PathVariable Long id)
     {
-        return customerServices.placeOrder(order);
+        return customerServices.placeOrder(order,id);
     }
 
 

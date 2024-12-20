@@ -1,12 +1,9 @@
 package com.FoodDelivery.Project.Services;
 
-import com.FoodDelivery.Project.Entity.UserPrincipal;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.UserCredentialsDataSourceAdapter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -58,7 +55,7 @@ public class JWTService {
                 .compact();
     }
 
-    private SecretKey getKey() {
+    SecretKey getKey() {
         byte[] keyBytes= Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
 
@@ -113,12 +110,12 @@ public class JWTService {
 
     }
 
-    private boolean isTokenExpired(String token)
+    boolean isTokenExpired(String token)
     {
         return extractExpiration(token).before(new Date());
     }
 
-    private Date extractExpiration(String token) {
+    Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 

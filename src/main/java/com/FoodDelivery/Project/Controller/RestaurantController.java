@@ -5,6 +5,7 @@ import com.FoodDelivery.Project.Entity.Menuu;
 import com.FoodDelivery.Project.Entity.Order;
 import com.FoodDelivery.Project.Services.MenuServices;
 import com.FoodDelivery.Project.Services.RestaurantServices;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/Restaurant")
+@Tag(name="Restaurant's API's")
 public class RestaurantController {
 
     @Autowired
@@ -23,10 +25,9 @@ public class RestaurantController {
     MenuServices menuServices;
 
     @PostMapping("/enterItems/{restaurant_id}")
-    public void insertItems(@PathVariable Long restaurant_id ,@RequestBody Menuu menu) {
-
-
+    public String insertItems(@PathVariable Long restaurant_id ,@RequestBody Menuu menu) {
         menuServices.addMenuForRestaurant(restaurant_id,menu);
+        return "Inserted";
     }
 
     @DeleteMapping("/deleteItem/{id}/{restaurant_id}")
@@ -41,10 +42,11 @@ public class RestaurantController {
         return menuServices.findByRestaurant(restaurantId);
     }
 
-    @GetMapping("/viewOrders/{restaurant_id}")
-    public List<Order> viewOrder(Long restaurant_id)
+    @GetMapping("/viewOrders/{restaurantId}")
+    public List<Order> viewOrder(@PathVariable Long restaurantId)
     {
-        return restaurantServices.viewOrders(restaurant_id);
+
+        return restaurantServices.viewOrders(restaurantId);
     }
 
 
