@@ -11,14 +11,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 public class CustomerControllerTests {
@@ -158,6 +158,19 @@ public class CustomerControllerTests {
         Order response = customerController.placeOrder(order, customerId);
 
         assertNotNull(response);
+    }
+
+    @Test
+    void testInsertCustomer_Failure_ServiceReturnsNull() {
+        Customer customer = new Customer();
+        customer.setName("Ram");
+
+        when(customerServices.save(customer)).thenReturn(null);
+
+        ResponseEntity<Customer> response = customerController.insert(customer);
+
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode(), "Expected status code to be 500 for failure.");
+        assertNull(response.getBody(), "Response body should be null when customer insertion fails.");
     }
 
 

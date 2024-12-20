@@ -47,8 +47,6 @@ public class RestaurantControllerTests {
             assertEquals(response, "Inserted");
 
         }
-
-        // Test for deleting menu items
         @Test
         void testDeleteItems_Success() {
             Long itemId = 1L;
@@ -106,8 +104,6 @@ public class RestaurantControllerTests {
             assertNotNull(response);
             assertTrue(response.isEmpty());
         }
-
-        // Test for viewing orders
         @Test
         void testViewOrder_Success() {
             Long restaurantId = 1L;

@@ -1,17 +1,28 @@
 package com.FoodDelivery.Project.Controller;
 
 import com.FoodDelivery.Project.Entity.Admin;
+import com.FoodDelivery.Project.Entity.Restaurant;
 import com.FoodDelivery.Project.Services.AdminServices;
+//import jdk.internal.jshell.tool.ConsoleIOContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.web.servlet.MockMvc;
+
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
+import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.post;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 public class AdminControllerTests {
@@ -21,6 +32,7 @@ public class AdminControllerTests {
 
         @InjectMocks
         private AdminController adminController;
+
 
         @BeforeEach
         void setUp() {
@@ -66,7 +78,26 @@ public class AdminControllerTests {
     }
 
 
+    @Test
+    void testInsertRestaurant_Success() {
+        Restaurant restaurant = new Restaurant();
+        restaurant.setRestaurantId(1L);
+        restaurant.setName("Alav");
 
+        when(adminServices.insertRestaurant(restaurant)).thenReturn(restaurant);
 
+        ResponseEntity<Restaurant> response = adminController.insertRestaurant(restaurant);
 
+        assertNotNull(response);
+        assertEquals(200, ((org.springframework.http.ResponseEntity<?>) response).getStatusCodeValue());
+        assertEquals(restaurant, response.getBody());
+
+       verify(adminServices, times(1)).insertRestaurant(restaurant);
+    }
 }
+
+
+
+
+
+
